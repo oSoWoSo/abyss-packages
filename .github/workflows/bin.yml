@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - action
   workflow_dispatch:
 
 env:
@@ -15,7 +16,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build:
+  set-matrix:
     name: Build Packages
     runs-on: ubuntu-latest
     container:
@@ -60,7 +61,6 @@ jobs:
           common/travis/fetch-xtools.sh
 
       - name: Generate matrix
-        id: set-matrix
         run: |
           directories=$(for d in */ ; do echo "${d%/}"; done)
           MATRIX="{\"include\": ["
