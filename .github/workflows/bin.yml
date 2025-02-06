@@ -25,9 +25,6 @@ jobs:
         PATH: "/usr/libexec/chroot-git:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin:/usr/local/bin:/tmp/bin"
         ARCH: "x86_64"
         HOSTREPO: /hostrepo
-    strategy:
-      fail-fast: false
-      matrix: ${{ fromJson(needs.set-matrix.outputs.matrix) }}
     steps:
       - name: Prepare container
         run: |
