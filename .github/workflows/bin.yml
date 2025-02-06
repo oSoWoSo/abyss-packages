@@ -19,13 +19,10 @@ jobs:
     name: Build Packages
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/void-linux/void-buildroot-${{ matrix.config.libc }}:20240526R1
-      options: --platform ${{ matrix.config.platform }}
+      image: ghcr.io/void-linux/void-buildroot-glibc:20240526R1
       env:
         PATH: "/usr/libexec/chroot-git:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin:/usr/local/bin:/tmp/bin"
-        ARCH: "${{ matrix.config.arch }}"
-        BOOTSTRAP: "${{ matrix.config.host }}"
-        TEST: "${{ matrix.config.test }}"
+        ARCH: "x86_64"
         HOSTREPO: /hostrepo
     strategy:
       fail-fast: false
