@@ -5,8 +5,8 @@ env:
 
 on:
   push:
-    branches:
-      - main
+    #branches:
+      #- main
 
   repository_dispatch:
     types: [autotrigger]
@@ -44,4 +44,4 @@ jobs:
         run: |
           PACKAGES=$(find . -maxdepth 1 -type d ! -name "." ! -name ".*" -printf "%f\n" 2>/dev/null)
           echo "${PACKAGES}" > packages.list
-          sh .github/workflows/xbps-mini-builder
+          ./xbps-mini-builder
