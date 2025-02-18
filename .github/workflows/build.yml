@@ -30,7 +30,6 @@ permissions:
 jobs:
   generate-matrix:
     name: "matrix 🌀"
-    needs: update-testing-branch
     runs-on: ubuntu-22.04
     outputs:
       skip: ${{ steps.set-matrix.outputs.skip }}
