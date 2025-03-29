@@ -54,7 +54,7 @@ jobs:
           ln -s "$(pwd)" /hostrepo &&
           common/travis/set_mirror.sh &&
           echo "set done" &&
-          common/travis/prepare.sh &&
+          sudo -Eu builder common/travis/prepare.sh &&
           echo "prepare done" &&
           sudo -Eu builder common/travis/fetch-xtools.sh &&
           echo "Done"
