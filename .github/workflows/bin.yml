@@ -20,20 +20,19 @@ jobs:
     name: Build Packages
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/void-linux/void-buildroot-glibc:20240526R1
+      image: ghcr.io/void-linux/void-glibc-full:20250227R1
+      options: --platform linux/amd64 --privileged
       env:
         PATH: "/usr/libexec/chroot-git:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin:/usr/local/bin:/tmp/bin"
         ARCH: "x86_64"
         HOSTREPO: /hostrepo
     steps:
-      - name: Prepare container
+      - name: Prepare container and create a non-root user
         run: |
           mkdir -p /etc/xbps.d && cp /usr/share/xbps.d/*-repository-*.conf /etc/xbps.d/
-          ls -la
           sed -i 's|repo-default|repo-ci|g' /etc/xbps.d/*-repository-*.conf
-          xbps-install -Syu xbps
-          xbps-install -Syu
-          xbps-install -y tar curl
+          xbps-install -Syu xbps && xbps-install -yu && xbps-install -y sudo bash grep curl git kotlin-bin
+          useradd -G xbuilder -M builder
 
       - name: Clone Void-Packages and prepare
         run: |
@@ -88,4 +87,5 @@ jobs:
           echo "Processing ${{ matrix.directory }}"
 
       - name: Build tomlplusplus
-        run: (/hostrepo/xbps-src -j$(nproc) -s -H ~/hostdir pkg tomlplusplus)
+        run: |
+          sudo -Eu builder /hostrepo/xbps-src -j$(nproc) -s -H ~/hostdir pkg tomlplusplus
