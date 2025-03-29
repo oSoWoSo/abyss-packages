@@ -52,9 +52,9 @@ jobs:
         run: |
           cd ~/void-pkgs/void-packages
           ln -s "$(pwd)" /hostrepo &&
-          common/travis/set_mirror.sh &&
-          common/travis/prepare.sh &&
-          common/travis/fetch-xtools.sh
+          sudo -Eu builder common/travis/set_mirror.sh &&
+          sudo -Eu builder common/travis/prepare.sh &&
+          sudo -Eu builder common/travis/fetch-xtools.sh
 
       - name: Generate matrix
         run: |
