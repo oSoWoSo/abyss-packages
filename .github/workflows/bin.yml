@@ -36,7 +36,7 @@ jobs:
 
       - name: Clone Void-Packages and prepare
         run: |
-          sudo -Eu builder mkdir ~/void-pkgs
+          mkdir ~/void-pkgs
           cd ~/void-pkgs
           sudo -Eu builder git clone --depth 1 https://github.com/void-linux/void-packages.git
 
